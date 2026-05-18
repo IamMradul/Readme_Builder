@@ -34,6 +34,7 @@ export type SkillCategory =
 
 export interface SkillsSection {
   selected: string[];
+  iconStyle: 'skillicons' | 'shields';
 }
 
 export type StatsWidget =
@@ -162,7 +163,7 @@ export const initialReadmeState: ReadmeState = {
     askMeAbout: '',
     funFact: '',
   },
-  skills: { selected: [] },
+  skills: { selected: [], iconStyle: 'skillicons' },
   stats: {
     widgets: ['stats-card'],
     theme: 'github-dark',

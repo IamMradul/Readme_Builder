@@ -111,8 +111,26 @@ function sectionAbout(state: ReadmeState): string {
 }
 
 function sectionSkills(state: ReadmeState): string {
-  const { selected } = state.skills;
+  const { selected, iconStyle = 'skillicons' } = state.skills;
   if (!selected.length) return '';
+
+  if (iconStyle === 'shields') {
+    const badges = selected
+      .map((id) => {
+        const skill = SKILLS.find((s) => s.id === id);
+        if (!skill) return '';
+        const name = encodeURIComponent(skill.name);
+        const logo = encodeURIComponent(skill.logo);
+        const logoColor = skill.logoColor || 'white';
+        return `![${skill.name}](https://img.shields.io/badge/${name}-${skill.color}?style=for-the-badge&logo=${logo}&logoColor=${logoColor})`;
+      })
+      .filter(Boolean);
+
+    return wrapSection(
+      'skills',
+      `## 🛠️ Tech Stack\n\n${alignBlock(badges.join(' '), 'center')}`
+    );
+  }
 
   const byCategory = SKILLS.reduce(
     (acc, skill) => {
