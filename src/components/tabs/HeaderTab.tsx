@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -6,12 +6,16 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { useReadmeStore } from '@/store/readmeStore';
+import { headerSchema } from '@/lib/validation';
 import type { CapsuleType } from '@/types/readme';
 
 export function HeaderTab() {
   const header = useReadmeStore((s) => s.state.header);
   const updateSection = useReadmeStore((s) => s.updateSection);
   const set = (patch: Partial<typeof header>) => updateSection('header', { ...header, ...patch });
+
+  const result = headerSchema.safeParse(header);
+  const errors = result.success ? {} : result.error.flatten().fieldErrors;
 
   const updateLine = (i: number, value: string) => {
     const lines = [...header.typingLines];
@@ -41,10 +45,16 @@ export function HeaderTab() {
           <div className="space-y-2">
             <Label>Colors (comma-separated hex)</Label>
             <Input value={header.capsuleColor} onChange={(e) => set({ capsuleColor: e.target.value })} />
+            {errors.capsuleColor && (
+              <p className="text-xs text-destructive font-medium animate-in fade-in slide-in-from-top-1 duration-200">{errors.capsuleColor[0]}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label>Height</Label>
             <Input type="number" value={header.capsuleHeight} onChange={(e) => set({ capsuleHeight: Number(e.target.value) })} />
+            {errors.capsuleHeight && (
+              <p className="text-xs text-destructive font-medium animate-in fade-in slide-in-from-top-1 duration-200">{errors.capsuleHeight[0]}</p>
+            )}
           </div>
         </div>
       )}
@@ -62,10 +72,16 @@ export function HeaderTab() {
             <div className="space-y-2">
               <Label>Color (hex without #)</Label>
               <Input value={header.typingColor} onChange={(e) => set({ typingColor: e.target.value })} />
+              {errors.typingColor && (
+                <p className="text-xs text-destructive font-medium animate-in fade-in slide-in-from-top-1 duration-200">{errors.typingColor[0]}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label>Speed (ms per char)</Label>
               <Input type="number" value={header.typingSpeed} onChange={(e) => set({ typingSpeed: Number(e.target.value) })} />
+              {errors.typingSpeed && (
+                <p className="text-xs text-destructive font-medium animate-in fade-in slide-in-from-top-1 duration-200">{errors.typingSpeed[0]}</p>
+              )}
             </div>
           </div>
         </div>

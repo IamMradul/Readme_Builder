@@ -1,9 +1,10 @@
-﻿'use client';
+'use client';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useReadmeStore } from '@/store/readmeStore';
+import { profileSchema } from '@/lib/validation';
 
 export function ProfileTab() {
   const profile = useReadmeStore((s) => s.state.profile);
@@ -11,6 +12,9 @@ export function ProfileTab() {
 
   const set = (field: keyof typeof profile, value: string) =>
     updateSection('profile', { ...profile, [field]: value });
+
+  const result = profileSchema.safeParse(profile);
+  const errors = result.success ? {} : result.error.flatten().fieldErrors;
 
   return (
     <div className="space-y-4">
@@ -22,6 +26,9 @@ export function ProfileTab() {
         <div className="space-y-2">
           <Label htmlFor="username">GitHub username</Label>
           <Input id="username" value={profile.username} onChange={(e) => set('username', e.target.value)} placeholder="johndoe" />
+          {errors.username && (
+            <p className="text-xs text-destructive font-medium animate-in fade-in slide-in-from-top-1 duration-200">{errors.username[0]}</p>
+          )}
         </div>
       </div>
       <div className="space-y-2">
@@ -36,11 +43,17 @@ export function ProfileTab() {
         <div className="space-y-2">
           <Label htmlFor="website">Website</Label>
           <Input id="website" value={profile.website} onChange={(e) => set('website', e.target.value)} placeholder="https://yoursite.dev" />
+          {errors.website && (
+            <p className="text-xs text-destructive font-medium animate-in fade-in slide-in-from-top-1 duration-200">{errors.website[0]}</p>
+          )}
         </div>
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
         <Input id="email" type="email" value={profile.email} onChange={(e) => set('email', e.target.value)} placeholder="hello@example.com" />
+        {errors.email && (
+          <p className="text-xs text-destructive font-medium animate-in fade-in slide-in-from-top-1 duration-200">{errors.email[0]}</p>
+        )}
       </div>
     </div>
   );
