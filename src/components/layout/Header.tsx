@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
-import { Sun, Moon, Copy, Download, Share2, Check, FileText } from 'lucide-react';
+import { Sun, Moon, Copy, Download, Share2, Check, FileText, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useReadmeStore } from '@/store/readmeStore';
 import { generateMarkdown } from '@/lib/generateMarkdown';
@@ -17,18 +17,44 @@ export function Header() {
   const state = useReadmeStore((s) => s.state);
   const showSaved = useReadmeStore((s) => s.showSaved);
   const getEncodedState = useReadmeStore((s) => s.getEncodedState);
+  const resetState = useReadmeStore((s) => s.resetState);
 
   useEffect(() => setMounted(true), []);
 
-  const markdown = generateMarkdown(state);
+  const copyText = async (text: string): Promise<boolean> => {
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (e) {
+        console.warn('Navigator clipboard failed, falling back:', e);
+      }
+    }
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      const success = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      return success;
+    } catch (err) {
+      console.error('Fallback copy failed:', err);
+      document.body.removeChild(textArea);
+      return false;
+    }
+  };
 
   const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(markdown);
+    const success = await copyText(markdown);
+    if (success) {
       setCopied(true);
       toast.success('Markdown copied!');
       setTimeout(() => setCopied(false), 2000);
-    } catch {
+    } else {
       toast.error('Failed to copy');
     }
   };
@@ -47,8 +73,12 @@ export function Header() {
   const handleShare = async () => {
     const encoded = getEncodedState();
     const url = `${window.location.origin}${window.location.pathname}?s=${encoded}`;
-    await navigator.clipboard.writeText(url);
-    toast.success('Share link copied!');
+    const success = await copyText(url);
+    if (success) {
+      toast.success('Share link copied!');
+    } else {
+      toast.error('Failed to copy share link');
+    }
   };
 
   return (
@@ -76,6 +106,21 @@ export function Header() {
           )}
 
           <TemplatesModal />
+
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
+            onClick={() => {
+              if (confirm('Are you sure you want to reset the README? This will clear all fields.')) {
+                resetState();
+                toast.success('Form reset successful!');
+              }
+            }}
+          >
+            <RotateCcw className="h-4 w-4" />
+            <span className="hidden sm:inline">Reset</span>
+          </Button>
 
           <Button
             variant="ghost"
