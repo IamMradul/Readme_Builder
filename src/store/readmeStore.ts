@@ -36,10 +36,12 @@ function deepMerge<T extends object>(base: T, patch: Partial<T>): T {
   return result;
 }
 
+const getCleanInitialState = (): ReadmeState => JSON.parse(JSON.stringify(initialReadmeState));
+
 export const useReadmeStore = create<ReadmeStore>()(
   persist(
     (set, get) => ({
-      state: initialReadmeState,
+      state: getCleanInitialState(),
       savedAt: null,
       showSaved: false,
 
@@ -57,12 +59,12 @@ export const useReadmeStore = create<ReadmeStore>()(
         })),
 
       applyTemplate: (partial) =>
-        set((s) => ({
-          state: deepMerge(s.state, partial),
-        })),
+        set({
+          state: deepMerge(getCleanInitialState(), partial),
+        }),
 
       resetState: () =>
-        set({ state: initialReadmeState, savedAt: null, showSaved: false }),
+        set({ state: getCleanInitialState(), savedAt: null, showSaved: false }),
 
       loadFromEncoded: (encoded) => {
         try {
@@ -70,7 +72,7 @@ export const useReadmeStore = create<ReadmeStore>()(
             atob(encoded.replace(/-/g, '+').replace(/_/g, '/'))
           );
           const parsed = JSON.parse(json) as Partial<ReadmeState>;
-          set((s) => ({ state: deepMerge(s.state, parsed) }));
+          set({ state: deepMerge(getCleanInitialState(), parsed) });
         } catch {
           console.error('Failed to decode shared state');
         }

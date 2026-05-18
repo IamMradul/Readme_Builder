@@ -172,24 +172,71 @@ function sectionMedia(state: ReadmeState): string {
   return wrapSection('media', blocks.join('\n\n'));
 }
 
+function formatSocialUrl(type: string, input: string): string {
+  const trimmed = input.trim();
+  if (!trimmed) return '';
+  
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+    return trimmed;
+  }
+  
+  switch (type) {
+    case 'linkedin':
+      if (trimmed.includes('linkedin.com/')) {
+        return `https://${trimmed.replace(/^(https?:\/\/)?(www\.)?/, '')}`;
+      }
+      return `https://linkedin.com/in/${encodeURIComponent(trimmed)}`;
+    case 'twitter':
+      if (trimmed.includes('twitter.com/') || trimmed.includes('x.com/')) {
+        return `https://${trimmed.replace(/^(https?:\/\/)?(www\.)?/, '')}`;
+      }
+      const cleanTwitter = trimmed.replace(/^@/, '');
+      return `https://twitter.com/${encodeURIComponent(cleanTwitter)}`;
+    case 'devto':
+      if (trimmed.includes('dev.to/')) {
+        return `https://${trimmed.replace(/^(https?:\/\/)?(www\.)?/, '')}`;
+      }
+      return `https://dev.to/${encodeURIComponent(trimmed)}`;
+    case 'medium':
+      if (trimmed.includes('medium.com/')) {
+        return `https://${trimmed.replace(/^(https?:\/\/)?(www\.)?/, '')}`;
+      }
+      const cleanMedium = trimmed.replace(/^@/, '');
+      return `https://medium.com/@${encodeURIComponent(cleanMedium)}`;
+    case 'youtube':
+      if (trimmed.includes('youtube.com/')) {
+        return `https://${trimmed.replace(/^(https?:\/\/)?(www\.)?/, '')}`;
+      }
+      const cleanYoutube = trimmed.replace(/^@/, '');
+      return `https://youtube.com/@${encodeURIComponent(cleanYoutube)}`;
+    case 'leetcode':
+      if (trimmed.includes('leetcode.com/')) {
+        return `https://${trimmed.replace(/^(https?:\/\/)?(www\.)?/, '')}`;
+      }
+      return `https://leetcode.com/${encodeURIComponent(trimmed)}`;
+    default:
+      return trimmed.startsWith('www.') ? `https://${trimmed}` : `https://${trimmed}`;
+  }
+}
+
 function sectionSocial(state: ReadmeState): string {
   const { social } = state;
   const badges: string[] = [];
 
-  const add = (label: string, url: string, color: string, logo: string) => {
+  const add = (label: string, url: string, color: string, logo: string, type: string) => {
     if (!url.trim()) return;
-    const href = url.startsWith('http') ? url : `https://${url}`;
+    const href = formatSocialUrl(type, url);
     badges.push(
       `[![${label}](https://img.shields.io/badge/${label}-${color}?style=for-the-badge&logo=${logo}&logoColor=white)](${href})`
     );
   };
 
-  add('LinkedIn', social.linkedin, '0A66C2', 'linkedin');
-  add('Twitter', social.twitter, '1DA1F2', 'x');
-  add('Dev.to', social.devto, '0A0A0A', 'devdotto');
-  add('Medium', social.medium, '000000', 'medium');
-  add('YouTube', social.youtube, 'FF0000', 'youtube');
-  add('LeetCode', social.leetcode, 'FFA116', 'leetcode');
+  add('LinkedIn', social.linkedin, '0A66C2', 'linkedin', 'linkedin');
+  add('Twitter', social.twitter, '1DA1F2', 'x', 'twitter');
+  add('Dev.to', social.devto, '0A0A0A', 'devdotto', 'devto');
+  add('Medium', social.medium, '000000', 'medium', 'medium');
+  add('YouTube', social.youtube, 'FF0000', 'youtube', 'youtube');
+  add('LeetCode', social.leetcode, 'FFA116', 'leetcode', 'leetcode');
   if (social.discord.trim()) {
     badges.push(
       `![Discord](https://img.shields.io/badge/Discord-${encodeURIComponent(social.discord)}-5865F2?style=for-the-badge&logo=discord&logoColor=white)`
@@ -209,8 +256,9 @@ function sectionExtras(state: ReadmeState): string {
   const username = extras.snakeUsername || profile.username;
 
   if (extras.contributionSnake && username) {
+    const encodedUser = encodeURIComponent(username);
     parts.push(
-      `![Snake animation](https://raw.githubusercontent.com/${username}/${username}/output/github-contribution-grid-snake.svg)`
+      `![Snake animation](https://raw.githubusercontent.com/${encodedUser}/${encodedUser}/output/github-contribution-grid-snake.svg)`
     );
   }
   if (extras.jokesWidget) {
@@ -224,8 +272,9 @@ function sectionExtras(state: ReadmeState): string {
     );
   }
   if (extras.buyMeACoffee && extras.buyMeACoffeeUsername) {
+    const bmcUser = encodeURIComponent(extras.buyMeACoffeeUsername);
     parts.push(
-      `[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/${extras.buyMeACoffeeUsername})`
+      `[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/${bmcUser})`
     );
   }
 
