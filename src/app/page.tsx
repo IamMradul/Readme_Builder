@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="container mx-auto grid gap-6 px-4 py-6 md:grid-cols-2 md:py-8">
+      <main className="mx-auto grid w-full max-w-[1600px] gap-5 px-4 py-4 md:grid-cols-[minmax(0,0.98fr)_minmax(0,1.02fr)] md:px-5 md:py-5 lg:px-6">
         <FormPanel />
         <PreviewPanel />
       </main>

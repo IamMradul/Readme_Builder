@@ -82,15 +82,15 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
-      <div className="container mx-auto flex h-14 flex-wrap items-center justify-between gap-2 px-4">
-        <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#238636] text-white">
+    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-xl">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-wrap items-center justify-between gap-2 px-4 py-3 md:px-5 lg:px-6">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#238636] text-white shadow-lg shadow-[#238636]/20">
             <FileText className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-sm font-bold leading-none sm:text-base">README Builder</h1>
-            <p className="text-xs text-muted-foreground hidden sm:block">GitHub profile generator</p>
+            <h1 className="text-sm font-semibold leading-none sm:text-base">README Builder</h1>
+            <p className="hidden text-xs text-muted-foreground sm:block">A cleaner way to craft a GitHub profile README</p>
           </div>
         </div>
 
@@ -99,7 +99,7 @@ export function Header() {
             <motion.span
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center gap-1 text-xs text-[#3fb950]"
+              className="flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-[#3fb950]"
             >
               <Check className="h-3.5 w-3.5" /> Saved
             </motion.span>
@@ -124,11 +124,11 @@ export function Header() {
 
           <Button
             variant="ghost"
-            size="icon"
+            size="icon-lg"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             aria-label="Toggle theme"
           >
-            {mounted && theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {mounted && theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </Button>
 
           <Button variant="outline" size="sm" className="gap-1.5" onClick={handleCopy}>

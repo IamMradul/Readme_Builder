@@ -41,27 +41,27 @@ export function FormPanel() {
   const [tab, setTab] = useState('profile');
 
   return (
-    <div className="flex h-full min-h-[480px] flex-col rounded-xl border border-border bg-card/80 shadow-sm backdrop-blur-sm">
-      <div className="border-b border-border px-4 py-3">
-        <h2 className="text-lg font-semibold">README Builder</h2>
-        <p className="text-sm text-muted-foreground">Customize each section of your profile</p>
+    <div className="flex h-full min-h-[540px] flex-col rounded-2xl border border-border/70 bg-card/85 shadow-xl shadow-black/5 backdrop-blur-sm">
+      <div className="border-b border-border/70 px-4 py-3">
+        <h2 className="text-lg font-semibold tracking-tight">Build your README</h2>
+        <p className="mt-0.5 text-xs text-muted-foreground">Fill in sections, reorder them, and preview the result live.</p>
       </div>
       <Tabs value={tab} onValueChange={setTab} className="flex flex-1 flex-col overflow-hidden">
         <TabsList className="mx-4 mt-3 flex h-auto flex-wrap justify-start gap-1 bg-muted/50 p-1">
           {TAB_ITEMS.map((t) => (
-            <TabsTrigger key={t.value} value={t.value} className="text-xs sm:text-sm">
+            <TabsTrigger key={t.value} value={t.value} className="px-3 py-1.5 text-xs sm:text-sm">
               {t.label}
             </TabsTrigger>
           ))}
         </TabsList>
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto px-4 py-4 lg:px-5">
           <AnimatePresence mode="wait">
             <motion.div
               key={tab}
               initial={{ opacity: 0, x: 8 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -8 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.18 }}
             >
               {TAB_CONTENT[tab]}
             </motion.div>

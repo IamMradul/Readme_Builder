@@ -116,15 +116,30 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(circle at top left, color-mix(in oklab, #238636 14%, transparent) 0, transparent 34%),
+      radial-gradient(circle at top right, color-mix(in oklab, #58a6ff 10%, transparent) 0, transparent 30%),
+      linear-gradient(to bottom, color-mix(in oklab, var(--background) 92%, white) 0%, var(--background) 30%, var(--background) 100%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, #238636 30%, transparent);
+    color: var(--foreground);
   }
 }
 
 .readme-preview {
   color: #e6edf3;
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 17px;
+  line-height: 1.65;
 }
 
 .readme-preview h1,
@@ -132,6 +147,18 @@
 .readme-preview h3 {
   border-bottom: 1px solid #21262d;
   padding-bottom: 0.3em;
+}
+
+.readme-preview h1 {
+  font-size: 2rem;
+}
+
+.readme-preview h2 {
+  font-size: 1.5rem;
+}
+
+.readme-preview h3 {
+  font-size: 1.2rem;
 }
 
 .readme-preview img {
