@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/sonner';
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   variable: '--font-sans',
@@ -44,6 +45,7 @@ export default function RootLayout({
         >
           {children}
           <Toaster position="bottom-right" />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
