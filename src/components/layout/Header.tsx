@@ -49,6 +49,7 @@ export function Header() {
   };
 
   const handleCopy = async () => {
+    const markdown = generateMarkdown(state);
     const success = await copyText(markdown);
     if (success) {
       setCopied(true);
@@ -60,6 +61,7 @@ export function Header() {
   };
 
   const handleDownload = () => {
+    const markdown = generateMarkdown(state);
     const blob = new Blob([markdown], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

@@ -58,7 +58,7 @@ export const README_TEMPLATES: ReadmeTemplate[] = [
         askMeAbout: 'Open source & hackathons',
         funFact: 'I debug with rubber ducks',
       },
-      skills: { selected: ['py', 'java', 'git', 'vscode', 'html', 'css'] },
+      skills: { selected: ['py', 'java', 'git', 'vscode', 'html', 'css'], iconStyle: 'skillicons' },
     },
   },
   {
@@ -87,6 +87,7 @@ export const README_TEMPLATES: ReadmeTemplate[] = [
     state: {
       skills: {
         selected: ['html', 'css', 'js', 'ts', 'react', 'nextjs', 'tailwind', 'figma', 'vite'],
+        iconStyle: 'skillicons',
       },
       social: {
         linkedin: 'https://linkedin.com/in/yourprofile',
