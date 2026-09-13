@@ -41,9 +41,9 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen md:h-screen flex flex-col bg-background md:overflow-hidden">
       <Header />
-      <main className="mx-auto grid w-full max-w-[1600px] gap-5 px-4 py-4 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:px-5 md:py-5 lg:px-6">
+      <main className="flex-1 mx-auto grid w-full max-w-[1600px] gap-5 px-4 py-4 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:px-5 md:py-5 lg:px-6 md:min-h-0">
         <FormPanel />
         <PreviewPanel />
       </main>

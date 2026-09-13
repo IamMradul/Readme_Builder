@@ -64,7 +64,7 @@ export function FormPanel() {
   const completeness = calculateCompleteness(state);
 
   return (
-    <div className="flex h-[calc(100vh-100px)] min-h-[540px] flex-col rounded-2xl glass-card overflow-hidden relative pb-14">
+    <div className="flex h-full min-h-[540px] flex-col rounded-2xl glass-card overflow-hidden relative pb-14">
       <div className="border-b border-[var(--glass-border)] px-5 py-4 bg-background/50 backdrop-blur-md relative overflow-hidden">
         <h2 className="text-lg font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Build your README</h2>
         <div className="mt-1 flex items-center justify-between">
@@ -91,7 +91,7 @@ export function FormPanel() {
                     layoutId="activeTabIndicator"
                     className="absolute inset-0 bg-primary/10 border border-primary/20 rounded-xl"
                     initial={false}
-                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    transition={{ type: 'spring', stiffness: 350, damping: 35 }}
                   />
                 )}
                 <Icon className={`h-5 w-5 z-10 transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'}`} />
@@ -108,10 +108,10 @@ export function FormPanel() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={tab}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
+                initial={{ opacity: 0, y: 6, filter: 'blur(2px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, y: -6, filter: 'blur(2px)' }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
                 className="h-full"
               >
                 {TAB_CONTENT[tab]}

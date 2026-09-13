@@ -68,6 +68,8 @@ export function PreviewPanel() {
     toast.success('Downloaded README.md');
   };
 
+
+
   const lineCount = useMemo(() => (markdown ? markdown.split('\n').length : 0), [markdown]);
   const lines = useMemo(() => markdown.split('\n'), [markdown]);
 
@@ -75,17 +77,17 @@ export function PreviewPanel() {
     <div className="flex h-full min-h-[540px] flex-col overflow-hidden rounded-2xl border border-border/70 bg-[#0d1117] shadow-xl shadow-black/10">
       {/* GitHub Repo File Header Style */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#30363d] px-4 py-3 lg:px-5 bg-[#161b22]">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-sm font-semibold text-[#c9d1d9]">
-            <FileText className="h-4 w-4 text-[#8b949e]" />
-            README.md
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 text-sm font-semibold text-[#c9d1d9]">
+              <FileText className="h-4 w-4 text-[#8b949e]" />
+              README.md
+            </div>
+            <span className="text-xs text-[#8b949e] border-l border-[#30363d] pl-3">
+              {lineCount} lines · {markdown.length.toLocaleString()} Bytes
+            </span>
           </div>
-          <span className="text-xs text-[#8b949e] border-l border-[#30363d] pl-3">
-            {lineCount} lines · {markdown.length.toLocaleString()} Bytes
-          </span>
-        </div>
 
-        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3">
           {/* Live Update Indicator */}
           <div 
             className="flex items-center gap-2 text-xs text-[#8b949e]"
@@ -98,65 +100,76 @@ export function PreviewPanel() {
             <span className="hidden sm:inline">Live sync</span>
           </div>
 
-          <div className="flex items-center gap-1 rounded-md border border-[#30363d] bg-[#0d1117] p-0.5">
-            <button
-              type="button"
-              onClick={() => setActiveTab('preview')}
-              aria-label="View Preview"
-              className={`flex items-center gap-1.5 rounded-sm px-3 py-1 text-xs font-semibold transition-all ${
-                activeTab === 'preview'
-                  ? 'bg-[#21262d] text-[#f0f6fc] shadow-sm'
-                  : 'text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d]/50'
-              }`}
-            >
-              <Eye className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Preview</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('code')}
-              aria-label="View Code"
-              className={`flex items-center gap-1.5 rounded-sm px-3 py-1 text-xs font-semibold transition-all ${
-                activeTab === 'code'
-                  ? 'bg-[#21262d] text-[#f0f6fc] shadow-sm'
-                  : 'text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d]/50'
-              }`}
-            >
-              <Code className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Code</span>
-            </button>
-          </div>
+            <div className="flex items-center gap-1 rounded-md border border-[#30363d] bg-[#0d1117] p-0.5">
+              <button
+                type="button"
+                onClick={() => setActiveTab('preview')}
+                aria-label="View Preview"
+                className={`flex items-center gap-1.5 rounded-sm px-3 py-1 text-xs font-semibold transition-all ${
+                  activeTab === 'preview'
+                    ? 'bg-[#21262d] text-[#f0f6fc] shadow-sm'
+                    : 'text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d]/50'
+                }`}
+              >
+                <Eye className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Preview</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('code')}
+                aria-label="View Code"
+                className={`flex items-center gap-1.5 rounded-sm px-3 py-1 text-xs font-semibold transition-all ${
+                  activeTab === 'code'
+                    ? 'bg-[#21262d] text-[#f0f6fc] shadow-sm'
+                    : 'text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d]/50'
+                }`}
+              >
+                <Code className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Code</span>
+              </button>
+            </div>
 
-          <div className="flex items-center gap-1 border-l border-[#30363d] pl-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7 text-[#8b949e] hover:bg-[#21262d] hover:text-[#f0f6fc]"
-              onClick={handleCopy}
-              aria-label="Copy raw contents"
-              title="Copy raw contents"
-            >
-              {copied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7 text-[#8b949e] hover:bg-[#21262d] hover:text-[#f0f6fc]"
-              onClick={handleDownload}
-              aria-label="Download raw contents"
-              title="Download raw contents"
-            >
-              <Download className="h-3.5 w-3.5" />
-            </Button>
+            <div className="flex items-center gap-1 border-l border-[#30363d] pl-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 text-[#8b949e] hover:bg-[#21262d] hover:text-[#f0f6fc]"
+                onClick={handleCopy}
+                aria-label="Copy raw contents"
+                title="Copy raw contents"
+              >
+                {copied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 text-[#8b949e] hover:bg-[#21262d] hover:text-[#f0f6fc]"
+                onClick={handleDownload}
+                aria-label="Download raw contents"
+                title="Download raw contents"
+              >
+                <Download className="h-3.5 w-3.5" />
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex-1 overflow-y-auto bg-[#0d1117]">
+      <div className="flex-1 overflow-y-auto bg-[#0d1117] min-h-0 dark">
         {activeTab === 'preview' ? (
           <div className="px-6 py-8 lg:px-10 lg:py-10 max-w-4xl mx-auto">
-            <article className="readme-preview prose prose-invert max-w-none prose-base prose-headings:scroll-mt-24 prose-img:inline prose-img:mx-auto prose-a:text-[#58a6ff]">
-              <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+            <article className="readme-preview prose prose-invert max-w-none prose-base prose-headings:scroll-mt-24 prose-img:inline prose-img:mx-auto prose-a:text-[#58a6ff] text-[#c9d1d9]">
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]} 
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  td: ({ node, ...props }) => {
+                    // Filter out vAlign to prevent React console warnings
+                    // while keeping it in the raw markdown for GitHub
+                    const { vAlign, valign, ...rest } = props as any;
+                    return <td style={{ verticalAlign: 'top' }} {...rest} />;
+                  }
+                }}
+              >
                 {markdown || '*Start filling the form to see your README...*'}
               </ReactMarkdown>
             </article>
