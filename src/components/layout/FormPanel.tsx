@@ -41,14 +41,37 @@ const TAB_CONTENT: Record<string, ReactNode> = {
   order: <SectionOrderPanel />,
 };
 
+import { useReadmeStore } from '@/store/readmeStore';
+import { Progress } from '@/components/ui/progress';
+import type { ReadmeState } from '@/types/readme';
+
+function calculateCompleteness(state: ReadmeState): number {
+  let score = 0;
+  if (state.profile?.name || state.profile?.bio || state.profile?.username) score += 20;
+  if (state.about?.workingOn || state.about?.learning || state.about?.funFact) score += 15;
+  if (state.skills?.selected?.length > 0) score += 20;
+  if (state.stats?.widgets?.length > 0 && state.profile?.username) score += 15;
+  if (state.social?.linkedin || state.social?.twitter || state.social?.youtube || state.social?.discord) score += 15;
+  if (state.header?.capsuleEnabled || state.header?.typingEnabled) score += 15;
+  return Math.min(100, score);
+}
+
+import { QuickInsertBar } from '@/components/builder/QuickInsertBar';
+
 export function FormPanel() {
   const [tab, setTab] = useState('profile');
+  const state = useReadmeStore((s) => s.state);
+  const completeness = calculateCompleteness(state);
 
   return (
-    <div className="flex h-[calc(100vh-100px)] min-h-[540px] flex-col rounded-2xl glass-card overflow-hidden">
-      <div className="border-b border-[var(--glass-border)] px-5 py-4 bg-background/50 backdrop-blur-md">
+    <div className="flex h-[calc(100vh-100px)] min-h-[540px] flex-col rounded-2xl glass-card overflow-hidden relative pb-14">
+      <div className="border-b border-[var(--glass-border)] px-5 py-4 bg-background/50 backdrop-blur-md relative overflow-hidden">
         <h2 className="text-lg font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Build your README</h2>
-        <p className="mt-1 text-xs text-muted-foreground">Fill in sections, reorder them, and preview the result live.</p>
+        <div className="mt-1 flex items-center justify-between">
+          <p className="text-xs text-muted-foreground">Fill in sections, reorder them, and preview the result live.</p>
+          <span className="text-[10px] font-medium text-muted-foreground">{completeness}% Complete</span>
+        </div>
+        <Progress value={completeness} className="h-1 mt-3 bg-muted/30" />
       </div>
       
       <Tabs value={tab} onValueChange={setTab} className="flex flex-1 flex-col sm:flex-row overflow-hidden">
@@ -80,19 +103,24 @@ export function FormPanel() {
           })}
         </TabsList>
         
-        <div className="flex-1 overflow-y-auto px-4 py-5 lg:px-6 scroll-smooth bg-background/30">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={tab}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="h-full"
-            >
-              {TAB_CONTENT[tab]}
-            </motion.div>
-          </AnimatePresence>
+        <div className="flex-1 flex flex-col overflow-y-auto bg-background/30 h-full">
+          <div className="flex-1 overflow-y-auto px-4 py-5 lg:px-6 scroll-smooth">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={tab}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="h-full"
+              >
+                {TAB_CONTENT[tab]}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="absolute bottom-0 right-0 left-0 sm:left-[100px] md:left-[120px] flex justify-center bg-background/50 backdrop-blur-md border-t border-[var(--glass-border)] pt-2 z-10">
+            <QuickInsertBar />
+          </div>
         </div>
       </Tabs>
     </div>
