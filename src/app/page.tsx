@@ -30,8 +30,12 @@ export default function Home() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#238636] border-t-transparent" />
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="mx-auto grid w-full max-w-[1600px] gap-5 px-4 py-4 md:grid-cols-[minmax(0,0.98fr)_minmax(0,1.02fr)] md:px-5 md:py-5 lg:px-6">
+          <div className="shimmer-bg h-[600px] w-full rounded-2xl border border-border/70" />
+          <div className="shimmer-bg h-[600px] w-full rounded-2xl border border-border/70 hidden md:block" />
+        </main>
       </div>
     );
   }
@@ -39,7 +43,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="mx-auto grid w-full max-w-[1600px] gap-5 px-4 py-4 md:grid-cols-[minmax(0,0.98fr)_minmax(0,1.02fr)] md:px-5 md:py-5 lg:px-6">
+      <main className="mx-auto grid w-full max-w-[1600px] gap-5 px-4 py-4 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:px-5 md:py-5 lg:px-6">
         <FormPanel />
         <PreviewPanel />
       </main>

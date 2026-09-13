@@ -1,8 +1,8 @@
-﻿'use client';
+'use client';
 
 import { useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ProfileTab } from '@/components/tabs/ProfileTab';
 import { AboutTab } from '@/components/tabs/AboutTab';
 import { SkillsTab } from '@/components/tabs/SkillsTab';
@@ -12,17 +12,18 @@ import { MediaTab } from '@/components/tabs/MediaTab';
 import { SocialTab } from '@/components/tabs/SocialTab';
 import { ExtrasTab } from '@/components/tabs/ExtrasTab';
 import { SectionOrderPanel } from '@/components/builder/SectionOrderPanel';
+import { User, Info, Terminal, BarChart2, Type, Image as ImageIcon, Link2, Puzzle, ListOrdered } from 'lucide-react';
 
 const TAB_ITEMS = [
-  { value: 'profile', label: 'Profile' },
-  { value: 'about', label: 'About' },
-  { value: 'skills', label: 'Skills' },
-  { value: 'stats', label: 'Stats' },
-  { value: 'header', label: 'Header' },
-  { value: 'media', label: 'Media' },
-  { value: 'social', label: 'Social' },
-  { value: 'extras', label: 'Extras' },
-  { value: 'order', label: 'Order' },
+  { value: 'profile', label: 'Profile', icon: User },
+  { value: 'about', label: 'About', icon: Info },
+  { value: 'skills', label: 'Skills', icon: Terminal },
+  { value: 'stats', label: 'Stats', icon: BarChart2 },
+  { value: 'header', label: 'Header', icon: Type },
+  { value: 'media', label: 'Media', icon: ImageIcon },
+  { value: 'social', label: 'Social', icon: Link2 },
+  { value: 'extras', label: 'Extras', icon: Puzzle },
+  { value: 'order', label: 'Order', icon: ListOrdered },
 ] as const;
 
 const TAB_CONTENT: Record<string, ReactNode> = {
@@ -41,27 +42,50 @@ export function FormPanel() {
   const [tab, setTab] = useState('profile');
 
   return (
-    <div className="flex h-full min-h-[540px] flex-col rounded-2xl border border-border/70 bg-card/85 shadow-xl shadow-black/5 backdrop-blur-sm">
-      <div className="border-b border-border/70 px-4 py-3">
-        <h2 className="text-lg font-semibold tracking-tight">Build your README</h2>
-        <p className="mt-0.5 text-xs text-muted-foreground">Fill in sections, reorder them, and preview the result live.</p>
+    <div className="flex h-[calc(100vh-100px)] min-h-[540px] flex-col rounded-2xl glass-card overflow-hidden">
+      <div className="border-b border-[var(--glass-border)] px-5 py-4 bg-background/50 backdrop-blur-md">
+        <h2 className="text-lg font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Build your README</h2>
+        <p className="mt-1 text-xs text-muted-foreground">Fill in sections, reorder them, and preview the result live.</p>
       </div>
-      <Tabs value={tab} onValueChange={setTab} className="flex flex-1 flex-col overflow-hidden">
-        <TabsList className="mx-4 mt-3 flex h-auto flex-wrap justify-start gap-1 bg-muted/50 p-1">
-          {TAB_ITEMS.map((t) => (
-            <TabsTrigger key={t.value} value={t.value} className="px-3 py-1.5 text-xs sm:text-sm">
-              {t.label}
-            </TabsTrigger>
-          ))}
+      
+      <Tabs value={tab} onValueChange={setTab} className="flex flex-1 flex-col sm:flex-row overflow-hidden">
+        <TabsList className="flex sm:flex-col justify-start h-auto w-full sm:w-[100px] md:w-[120px] bg-muted/20 border-b sm:border-b-0 sm:border-r border-[var(--glass-border)] overflow-x-auto sm:overflow-y-auto overflow-y-hidden sm:overflow-x-hidden p-2 gap-1 rounded-none">
+          {TAB_ITEMS.map((t) => {
+            const Icon = t.icon;
+            const isActive = tab === t.value;
+            
+            return (
+              <TabsTrigger 
+                key={t.value} 
+                value={t.value} 
+                className="relative flex flex-col items-center justify-center gap-1.5 h-16 w-16 sm:w-full min-w-16 rounded-xl data-[state=active]:bg-transparent data-[state=active]:shadow-none transition-colors hover:bg-muted/50"
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTabIndicator"
+                    className="absolute inset-0 bg-primary/10 border border-primary/20 rounded-xl"
+                    initial={false}
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <Icon className={`h-5 w-5 z-10 transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'}`} />
+                <span className={`text-[10px] font-medium z-10 transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
+                  {t.label}
+                </span>
+              </TabsTrigger>
+            );
+          })}
         </TabsList>
-        <div className="flex-1 overflow-y-auto px-4 py-4 lg:px-5">
+        
+        <div className="flex-1 overflow-y-auto px-4 py-5 lg:px-6 scroll-smooth bg-background/30">
           <AnimatePresence mode="wait">
             <motion.div
               key={tab}
-              initial={{ opacity: 0, x: 8 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -8 }}
-              transition={{ duration: 0.18 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="h-full"
             >
               {TAB_CONTENT[tab]}
             </motion.div>
@@ -71,4 +95,3 @@ export function FormPanel() {
     </div>
   );
 }
-
