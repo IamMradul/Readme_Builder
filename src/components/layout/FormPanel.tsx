@@ -2,7 +2,7 @@
 
 import { useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProfileTab } from '@/components/tabs/ProfileTab';
 import { AboutTab } from '@/components/tabs/AboutTab';
 import { SkillsTab } from '@/components/tabs/SkillsTab';

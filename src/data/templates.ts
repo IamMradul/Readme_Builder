@@ -123,4 +123,124 @@ export const README_TEMPLATES: ReadmeTemplate[] = [
       extras: { ...initialReadmeState.extras, quotesWidget: true },
     },
   },
+  {
+    id: 'portfolio',
+    name: 'Personal Portfolio',
+    description: 'A professional portfolio with projects and skills',
+    thumbnail: '💼',
+    state: {
+      profile: {
+        name: 'Jane Doe',
+        username: 'janedoe',
+        bio: 'Senior Software Engineer | Full Stack | Open Source',
+        location: 'San Francisco, CA',
+        website: 'https://janedoe.dev',
+        email: 'contact@janedoe.dev',
+      },
+      skills: {
+        selected: ['js', 'ts', 'react', 'nextjs', 'nodejs', 'aws', 'docker'],
+        iconStyle: 'skillicons',
+      },
+      stats: { widgets: ['stats-card', 'top-langs'], theme: 'tokyonight' },
+      social: { ...initialReadmeState.social, linkedin: 'https://linkedin.com/in/janedoe', twitter: 'https://twitter.com/janedoe' },
+    },
+  },
+  {
+    id: 'api-docs',
+    name: 'API Documentation',
+    description: 'Perfect for library and package repositories',
+    thumbnail: '📖',
+    state: {
+      header: {
+        ...initialReadmeState.header,
+        typingEnabled: true,
+        typingLines: ['My Awesome API', 'A powerful SDK for everything'],
+      },
+      about: {
+        workingOn: 'v2.0.0 release',
+        learning: '',
+        askMeAbout: 'API integration',
+        funFact: '',
+      },
+      skills: { selected: ['npm', 'ts'], iconStyle: 'skillicons' },
+    },
+  },
+  {
+    id: 'data-science',
+    name: 'Data Science',
+    description: 'Tailored for ML, AI, and Data engineers',
+    thumbnail: '📈',
+    state: {
+      skills: {
+        selected: ['py', 'r', 'tensorflow', 'pytorch', 'pandas'],
+        iconStyle: 'skillicons',
+      },
+      about: {
+        workingOn: 'LLM fine-tuning',
+        learning: 'Transformers architecture',
+        askMeAbout: 'Data visualization',
+        funFact: 'I dream in Python',
+      },
+    },
+  },
+  {
+    id: 'startup',
+    name: 'Startup/SaaS',
+    description: 'Product-focused layout for companies',
+    thumbnail: '🚀',
+    state: {
+      header: {
+        ...initialReadmeState.header,
+        capsuleEnabled: true,
+        capsuleType: 'soft',
+        capsuleColor: 'FF0000,000000',
+      },
+      profile: {
+        name: 'Awesome SaaS',
+        username: 'awesomesaas',
+        bio: 'We build the tools of tomorrow.',
+        location: 'Global',
+        website: 'https://awesomesaas.com',
+        email: 'hello@awesomesaas.com',
+      },
+      stats: { widgets: ['stats-card'], theme: 'radical' },
+    },
+  },
+  {
+    id: 'hackathon',
+    name: 'Hackathon Project',
+    description: 'Quick setup to showcase your build',
+    thumbnail: '🏆',
+    state: {
+      about: {
+        workingOn: 'Hackathon 2024 Winner',
+        learning: 'New tech stack overnight',
+        askMeAbout: 'Our pitch deck',
+        funFact: 'Built on 0 hours of sleep',
+      },
+      skills: {
+        selected: ['react', 'firebase', 'vercel', 'figma'],
+        iconStyle: 'skillicons',
+      },
+    },
+  },
+  {
+    id: 'devops',
+    name: 'DevOps / SRE',
+    description: 'Infrastructure and automation focused',
+    thumbnail: '⚙️',
+    state: {
+      skills: {
+        selected: ['aws', 'gcp', 'azure', 'docker', 'kubernetes', 'linux', 'bash', 'terraform', 'githubactions'],
+        iconStyle: 'skillicons',
+      },
+      about: {
+        workingOn: 'Zero-downtime migrations',
+        learning: 'Chaos engineering',
+        askMeAbout: 'CI/CD pipelines',
+        funFact: '99.999% uptime enthusiast',
+      },
+      stats: { widgets: ['streak'], theme: 'github-dark' },
+    },
+  },
 ];
