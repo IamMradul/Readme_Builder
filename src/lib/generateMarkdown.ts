@@ -1,6 +1,8 @@
 import type { ReadmeState, SectionId, StatsWidget } from '@/types/readme';
 import { buildSkillIconsUrl, SKILLS } from '@/data/skills';
 import { MEDIA_SIZE_WIDTH } from '@/data/gifPresets';
+import { BADGES } from '@/data/badges';
+import { COMPONENTS_LIBRARY } from '@/data/components-library';
 
 const SECTION_MARKERS: Record<SectionId, { start: string; end: string }> = {
   profile: { start: '<!-- PROFILE:START -->', end: '<!-- PROFILE:END -->' },
@@ -11,6 +13,7 @@ const SECTION_MARKERS: Record<SectionId, { start: string; end: string }> = {
   media: { start: '<!-- MEDIA:START -->', end: '<!-- MEDIA:END -->' },
   social: { start: '<!-- SOCIAL:START -->', end: '<!-- SOCIAL:END -->' },
   extras: { start: '<!-- EXTRAS:START -->', end: '<!-- EXTRAS:END -->' },
+  elements: { start: '<!-- ELEMENTS:START -->', end: '<!-- ELEMENTS:END -->' },
 };
 
 function wrapSection(id: SectionId, body: string): string {
@@ -300,6 +303,40 @@ function sectionExtras(state: ReadmeState): string {
   return wrapSection('extras', alignBlock(parts.join('\n\n'), 'center'));
 }
 
+function sectionElements(state: ReadmeState): string {
+  const { elements } = state;
+  if (!elements || (!elements.badges.length && !elements.components.length)) return '';
+
+  const parts: string[] = [];
+  
+  if (elements.badges.length > 0) {
+    const badgeImgs = elements.badges
+      .map(id => {
+        const b = BADGES.find(b => b.id === id);
+        return b ? `![${b.name}](${b.url})` : '';
+      })
+      .filter(Boolean);
+    if (badgeImgs.length) {
+      parts.push(alignBlock(badgeImgs.join(' '), 'center'));
+    }
+  }
+
+  if (elements.components.length > 0) {
+    const comps = elements.components
+      .map(id => {
+        const c = COMPONENTS_LIBRARY.find(c => c.id === id);
+        return c ? c.markdown : '';
+      })
+      .filter(Boolean);
+    if (comps.length) {
+      parts.push(comps.join('\n\n'));
+    }
+  }
+
+  if (!parts.length) return '';
+  return wrapSection('elements', `## ✨ Special Elements\n\n${parts.join('\n\n')}`);
+}
+
 const SECTION_BUILDERS: Record<SectionId, (s: ReadmeState) => string> = {
   profile: sectionProfile,
   about: sectionAbout,
@@ -309,6 +346,7 @@ const SECTION_BUILDERS: Record<SectionId, (s: ReadmeState) => string> = {
   media: sectionMedia,
   social: sectionSocial,
   extras: sectionExtras,
+  elements: sectionElements,
 };
 
 export function generateMarkdown(state: ReadmeState): string {

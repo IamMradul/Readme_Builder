@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import {
   DndContext,
@@ -24,12 +24,13 @@ import type { SectionId } from '@/types/readme';
 const LABELS: Record<SectionId, string> = {
   profile: 'Profile',
   about: 'About Me',
-  skills: 'Skills',
-  stats: 'GitHub Stats',
-  header: 'Animated Header',
-  media: 'GIFs & Media',
+  skills: 'Tech Stack',
+  stats: 'Stats & Trophies',
+  header: 'Header',
+  media: 'Images / GIFs',
   social: 'Social Links',
-  extras: 'Extras',
+  extras: 'Extras (Snake, Jokes, etc.)',
+  elements: 'Visual Elements (Badges, Blocks)',
 };
 
 function SortableItem({ id }: { id: SectionId }) {

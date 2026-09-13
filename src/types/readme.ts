@@ -6,7 +6,8 @@ export type SectionId =
   | 'header'
   | 'media'
   | 'social'
-  | 'extras';
+  | 'extras'
+  | 'elements';
 
 export interface ProfileSection {
   name: string;
@@ -124,6 +125,11 @@ export interface ExtrasSection {
   buyMeACoffeeUsername: string;
 }
 
+export interface ElementsSection {
+  badges: string[];
+  components: string[];
+}
+
 export interface ReadmeState {
   sectionOrder: SectionId[];
   profile: ProfileSection;
@@ -134,6 +140,7 @@ export interface ReadmeState {
   media: MediaSection;
   social: SocialSection;
   extras: ExtrasSection;
+  elements: ElementsSection;
 }
 
 export const DEFAULT_SECTION_ORDER: SectionId[] = [
@@ -143,6 +150,7 @@ export const DEFAULT_SECTION_ORDER: SectionId[] = [
   'skills',
   'stats',
   'media',
+  'elements',
   'social',
   'extras',
 ];
@@ -196,4 +204,5 @@ export const initialReadmeState: ReadmeState = {
     buyMeACoffee: false,
     buyMeACoffeeUsername: '',
   },
+  elements: { badges: [], components: [] },
 };

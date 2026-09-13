@@ -12,7 +12,8 @@ import { MediaTab } from '@/components/tabs/MediaTab';
 import { SocialTab } from '@/components/tabs/SocialTab';
 import { ExtrasTab } from '@/components/tabs/ExtrasTab';
 import { SectionOrderPanel } from '@/components/builder/SectionOrderPanel';
-import { User, Info, Terminal, BarChart2, Type, Image as ImageIcon, Link2, Puzzle, ListOrdered } from 'lucide-react';
+import { ElementsLibraryTab } from '@/components/tabs/ElementsLibraryTab';
+import { User, Info, Terminal, BarChart2, Type, Image as ImageIcon, Link2, Puzzle, ListOrdered, Sparkles } from 'lucide-react';
 
 const TAB_ITEMS = [
   { value: 'profile', label: 'Profile', icon: User },
@@ -23,6 +24,7 @@ const TAB_ITEMS = [
   { value: 'media', label: 'Media', icon: ImageIcon },
   { value: 'social', label: 'Social', icon: Link2 },
   { value: 'extras', label: 'Extras', icon: Puzzle },
+  { value: 'elements', label: 'Elements', icon: Sparkles },
   { value: 'order', label: 'Order', icon: ListOrdered },
 ] as const;
 
@@ -35,6 +37,7 @@ const TAB_CONTENT: Record<string, ReactNode> = {
   media: <MediaTab />,
   social: <SocialTab />,
   extras: <ExtrasTab />,
+  elements: <ElementsLibraryTab />,
   order: <SectionOrderPanel />,
 };
 
