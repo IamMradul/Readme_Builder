@@ -64,7 +64,7 @@ export function FormPanel() {
   const completeness = calculateCompleteness(state);
 
   return (
-    <div className="flex h-full min-h-[540px] flex-col rounded-2xl glass-card overflow-hidden relative pb-14">
+    <div className="flex h-full min-h-[540px] flex-col rounded-2xl glass-card overflow-hidden relative">
       <div className="border-b border-[var(--glass-border)] px-5 py-4 bg-background/50 backdrop-blur-md relative overflow-hidden">
         <h2 className="text-lg font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Build your README</h2>
         <div className="mt-1 flex items-center justify-between">
@@ -103,8 +103,8 @@ export function FormPanel() {
           })}
         </TabsList>
         
-        <div className="flex-1 flex flex-col overflow-y-auto bg-background/30 h-full">
-          <div className="flex-1 overflow-y-auto px-4 py-5 lg:px-6 scroll-smooth">
+        <div className="flex-1 flex flex-col bg-background/30 h-full relative overflow-hidden">
+          <div className="flex-1 overflow-y-auto px-4 pt-5 lg:px-6 scroll-smooth">
             <AnimatePresence mode="wait">
               <motion.div
                 key={tab}
@@ -112,13 +112,13 @@ export function FormPanel() {
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, y: -6, filter: 'blur(2px)' }}
                 transition={{ duration: 0.18, ease: 'easeOut' }}
-                className="h-full"
+                className="min-h-full pb-28"
               >
                 {TAB_CONTENT[tab]}
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="absolute bottom-0 right-0 left-0 sm:left-[100px] md:left-[120px] flex justify-center bg-background/50 backdrop-blur-md border-t border-[var(--glass-border)] pt-2 z-10">
+          <div className="absolute bottom-0 left-0 right-0 flex justify-center bg-background/50 backdrop-blur-md border-t border-[var(--glass-border)] py-3 z-10">
             <QuickInsertBar />
           </div>
         </div>

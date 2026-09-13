@@ -84,55 +84,6 @@ export function Header() {
     }
   };
 
-  const ActionButtons = () => (
-    <>
-      <div className="flex items-center gap-2 border-r border-border/50 pr-4">
-        <TemplatesModal />
-        <Button
-          variant="outline"
-          size="sm"
-          className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
-          onClick={() => {
-            if (confirm('Are you sure you want to reset the README? This will clear all fields.')) {
-              resetState();
-              toast.success('Form reset successful!');
-            }
-          }}
-          aria-label="Reset form"
-        >
-          <RotateCcw className="h-4 w-4" />
-          <span className="hidden sm:inline">Reset</span>
-        </Button>
-      </div>
-      
-      <div className="flex items-center gap-2 border-r border-border/50 pr-4">
-        <Button
-          variant="ghost"
-          size="icon-lg"
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          aria-label="Toggle theme"
-        >
-          {mounted && theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-        </Button>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm" className="gap-1.5" onClick={handleCopy} aria-label="Copy markdown">
-          {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
-          <span className="hidden sm:inline">Copy Markdown</span>
-        </Button>
-        <Button variant="outline" size="sm" className="gap-1.5" onClick={handleDownload} aria-label="Download markdown">
-          <Download className="h-4 w-4" />
-          <span className="hidden sm:inline">Download</span>
-        </Button>
-        <Button variant="default" size="sm" className="gap-1.5 bg-gradient-to-r from-primary to-[oklch(0.6_0.15_240)] text-primary-foreground hover:opacity-90 transition-opacity border-0" onClick={handleShare} aria-label="Share">
-          <Share2 className="h-4 w-4" />
-          <span className="hidden sm:inline">Share</span>
-        </Button>
-      </div>
-    </>
-  );
-
   return (
     <header className="sticky top-0 z-50 bg-[var(--glass-bg)] backdrop-blur-xl border-b border-[var(--glass-border)] shadow-[var(--glass-shadow)] transition-all">
       <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -160,7 +111,51 @@ export function Header() {
               <Check className="h-3.5 w-3.5" /> Saved
             </motion.span>
           )}
-          <ActionButtons />
+          
+          <div className="flex items-center gap-2 border-r border-border/50 pr-4">
+            <TemplatesModal />
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
+              onClick={() => {
+                if (confirm('Are you sure you want to reset the README? This will clear all fields.')) {
+                  resetState();
+                  toast.success('Form reset successful!');
+                }
+              }}
+              aria-label="Reset form"
+            >
+              <RotateCcw className="h-4 w-4" />
+              <span className="hidden sm:inline">Reset</span>
+            </Button>
+          </div>
+          
+          <div className="flex items-center gap-2 border-r border-border/50 pr-4">
+            <Button
+              variant="ghost"
+              size="icon-lg"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              aria-label="Toggle theme"
+            >
+              {mounted && theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="gap-1.5" onClick={handleCopy} aria-label="Copy markdown">
+              {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+              <span className="hidden sm:inline">Copy Markdown</span>
+            </Button>
+            <Button variant="outline" size="sm" className="gap-1.5" onClick={handleDownload} aria-label="Download markdown">
+              <Download className="h-4 w-4" />
+              <span className="hidden sm:inline">Download</span>
+            </Button>
+            <Button variant="default" size="sm" className="gap-1.5 bg-gradient-to-r from-primary to-[oklch(0.6_0.15_240)] text-primary-foreground hover:opacity-90 transition-opacity border-0" onClick={handleShare} aria-label="Share">
+              <Share2 className="h-4 w-4" />
+              <span className="hidden sm:inline">Share</span>
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Actions */}

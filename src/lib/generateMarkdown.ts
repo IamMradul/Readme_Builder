@@ -321,14 +321,16 @@ function sectionElements(state: ReadmeState): string {
     }
   }
 
-  if (elements.components.length > 0) {
-    const comps = elements.components
-      .map(id => {
-        const c = COMPONENTS_LIBRARY.find(c => c.id === id);
-        return c ? c.markdown : '';
+  if (state.elements.components?.length > 0) {
+    const comps = state.elements.components
+      .map((id) => {
+        const customContent = state.elements.componentContent?.[id];
+        if (customContent !== undefined) return customContent;
+        const libComp = COMPONENTS_LIBRARY.find((c) => c.id === id);
+        return libComp ? libComp.markdown : null;
       })
       .filter(Boolean);
-    if (comps.length) {
+    if (comps.length > 0) {
       parts.push(comps.join('\n\n'));
     }
   }

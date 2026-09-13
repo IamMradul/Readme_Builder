@@ -128,6 +128,7 @@ export interface ExtrasSection {
 export interface ElementsSection {
   badges: string[];
   components: string[];
+  componentContent?: Record<string, string>;
 }
 
 export interface ReadmeState {
